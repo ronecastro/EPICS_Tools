@@ -17,4 +17,3 @@ It is meant to be used within Sirius Synchrotron Accelerator Facility.
 - Start Igor from the installation window as soon it asks to.
 - Go to menu Help > Show Igor Pro Folder, then locate Igor64.exe (usually under IgorBinaries_x64), copy the path.
 - To open Igor, use 'wine <path to Igor64.exe>'. You can add a shortcut to desktop using this command.
-
