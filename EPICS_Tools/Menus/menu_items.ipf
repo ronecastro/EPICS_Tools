@@ -355,7 +355,7 @@ Function ClearWaves()
 		list = WaveList("*",";","")
 		for(i=0;ItemsInList(list)>i;i+=1)
 			wname = stringfromlist(i,list)
-			Redimension/N=0 $wname
+			Redimension/N=2 $wname
 		endfor
 		//print "YES"
 		print "Waves's Content Erased!"
