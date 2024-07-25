@@ -640,6 +640,7 @@ Function ButtonProc_AddSelection(ba) : ButtonControl
 	wave wParameterSel = root:VarList:wParameterSel
 	SVAR/Z SearchField = root:GlobalVariables:gSearchField
 	SVAR/Z PVsFile = root:GlobalVariables:gPVsfile
+	string PVsFile_
 	
 	switch( ba.eventCode )
 		case 2: // mouse up
@@ -649,7 +650,16 @@ Function ButtonProc_AddSelection(ba) : ButtonControl
 			//SearchFieldTemp = "^" + SearchFieldTemp //^ denota com quais caracteres começa a procura
 			//SearchFieldTemp = SearchFieldTemp + "$" //$ denota com quais caracteres termina a procura
 			if (strlen(SearchField) != 0) //se há algo no campo SearchField
-				Grep/E=SearchField PVsFile as wGrepRes //pesquisa no arquivo pvfile pela PV usando como critério SearchField, retorna na wave wGrepRes
+				PathInfo EPICS_Tools
+				if (V_Flag == 1)
+					PVsFile_ = S_path + PVsFile
+				else
+					print "Problems finding EPICSpvlist.dat"
+					return 0
+				endif
+				KillVariables/Z V_Flag
+				KillStrings/Z S_path
+				Grep/E=SearchField PVsFile_ as wGrepRes //pesquisa no arquivo pvfile pela PV usando como critério SearchField, retorna na wave wGrepRes
 				if (wavedims(wGrepRes) == 0) //verifico se há algum resultado que corresponde à pesquisa, se não há...
 					print "There's no item that corresponds to that EPICS Name / Search Filters!" //emito aviso
 					SetVariable svSearchField activate // e retorno a seleção ao campo do Nome EPICS/Filtro de Pesquisa
@@ -777,6 +787,7 @@ Function ButtonProc_LoadSelection(ba) : ButtonControl
 	int i = 0
 	string changedname
 	variable bar
+	string PVsFile_
 	
 	switch( ba.eventCode )
 		case 2: // mouse up
@@ -793,7 +804,16 @@ Function ButtonProc_LoadSelection(ba) : ButtonControl
 				for (i=0; i < numpnts(wParameters2Search); i+=1)//para cada parametro de pesquisa no caixa de pesquisa
 					//Redimension/N=(numpnts(wPVs)) wPVstemp //igualo dimensoes de wPVs(1) e wPVstemp(1)
 					//wPVstemp = wPVs //copio wPVs para wPVstemp
-					Grep/E=wParameters2Search[i] PVsFile as wGrepRes //pesquiso no arquivo PVsFile e gero o resultado na wave GrepRes
+					PathInfo EPICS_Tools
+					if (V_Flag == 1)
+						PVsFile_ = S_path + PVsFile
+					else
+						print "Problems finding EPICSpvlist.dat"
+						return 0
+					endif
+					KillVariables/Z V_Flag
+					KillStrings/Z S_path
+					Grep/E=wParameters2Search[i] PVsFile_ as wGrepRes //pesquiso no arquivo PVsFile e gero o resultado na wave GrepRes
 					//Redimension/N=(numpnts(wPVs)+numpnts(wGrepRes)) wPVs //redimensiono wPVs para acomodar o resultado
 					Concatenate/NP/T {wGrepRes}, wPVs //junto todas as iterações de wGrepRes na wave wPVs
 					//wPVs = wPVstemp + wGrepRes //copio o conteúdo anterior mais o resultado GrepRes para

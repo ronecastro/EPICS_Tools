@@ -221,10 +221,20 @@ Function CreateGraph(wfilter, leg)
 	wave/T wGrepRes = root:VarList:wGrepRes
 	wave/T wGrepResTotal
 	SVAR/Z PVsFile = root:GlobalVariables:gPVsfile
+	string PVsFile_
 	
+	PathInfo EPICS_Tools
+	if (V_Flag == 1)
+		PVsFile_ = S_path + PVsFile
+	else
+		print "Problems finding EPICSpvlist.dat"
+		return 0
+	endif
+	KillVariables/Z V_Flag
+	KillStrings/Z S_path
 	
 	for(i=0;ItemsInList(wfilter)>i;i+=1)
-		Grep/O/E=StringFromList(i,wfilter) PVsFile as wGrepRes //pesquiso filtros no arquivo de PVs
+		Grep/O/E=StringFromList(i,wfilter) PVsFile_ as wGrepRes //pesquiso filtros no arquivo de PVs
 		Concatenate/T/NP {wGrepRes}, wGrepResTotal
 	endfor
 	
@@ -255,10 +265,20 @@ Function CreateBPMGraph(wfilter, leg)
 	wave/T wGrepRes = root:VarList:wGrepRes
 	wave/T wGrepResTotal
 	SVAR/Z PVsFile = root:GlobalVariables:gPVsfile
+	string PVsFile_
 	
+	PathInfo EPICS_Tools
+	if (V_Flag == 1)
+		PVsFile_ = S_path + PVsFile
+	else
+		print "Problems finding EPICSpvlist.dat"
+		return 0
+	endif
+	KillVariables/Z V_Flag
+	KillStrings/Z S_path
 	
 	for(i=0;ItemsInList(wfilter)>i;i+=1)
-		Grep/O/E=StringFromList(i,wfilter) PVsFile as wGrepRes //pesquiso filtros no arquivo de PVs
+		Grep/O/E=StringFromList(i,wfilter) PVsFile_ as wGrepRes //pesquiso filtros no arquivo de PVs
 		Concatenate/T/NP {wGrepRes}, wGrepResTotal
 	endfor
 	
@@ -393,7 +413,8 @@ Function GetAllPVs(url)
 		offset = 0
 		Redimension/N=0 wAllPVsList
 		totalpvs = ItemsInList(data,",")
-		ToCommandLine "["
+		print "[===================================================================================================]"
+		ToCommandLine "    ["
 		multiplier = 1
 		ten_perc = round(totalpvs/100)
 		for (i=0; totalpvs>=i; i+=1)
@@ -406,7 +427,7 @@ Function GetAllPVs(url)
 		endfor
 		ToCommandLine "]"
 		print("Parsed! Saving to Disk...")
-		Save/O/G/M="\r\n"/P=IgorUserFiles wAllPVsList as "EPICSpvlist.dat"
+		Save/O/G/M="\r\n"/P=EPICS_Tools wAllPVsList as PVsFile
 		print("Data Saved to Disk!")
 	endif
 End

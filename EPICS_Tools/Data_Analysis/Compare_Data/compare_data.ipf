@@ -20,6 +20,7 @@ Function AddPDGSel_Comp()
 	wave/T wParameters2Search = root:Compare:VarWaves:wParameters2Search
 	wave wParameterSel = root:Compare:VarWaves:wParameterSel
 	string PDGlist = ""
+	string PVsFile_
 	variable i
 	
 	Redimension/N=0 wGrepRes //esvazio a wave
@@ -30,8 +31,17 @@ Function AddPDGSel_Comp()
 		endif
 	endfor
 	//print "pdglist", PDGlist
+	PathInfo EPICS_Tools
+	if (V_Flag == 1)
+		PVsFile_ = S_path + PVsFile
+	else
+		print "Problems finding EPICSpvlist.dat"
+		return 0
+	endif
+	KillVariables/Z V_Flag
+	KillStrings/Z S_path
 	for(i=0;ItemsInList(PDGlist)>i;i+=1)
-		Grep/A/E=StringFromList(i,PDGlist) PVsFile as wGrepRes //pesquiso filtros no arquivo de PVs
+		Grep/A/E=StringFromList(i,PDGlist) PVsFile_ as wGrepRes //pesquiso filtros no arquivo de PVs
 	endfor
 	
 	killstrings/Z V_flag, V_value, V_startParagraph, S_fileName, S_path, S_Value  //mato as strings geradas no Grep acima

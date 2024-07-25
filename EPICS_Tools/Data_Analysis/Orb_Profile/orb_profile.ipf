@@ -141,7 +141,7 @@ Function getorbprofile() //acessado através do botão Orbit Profile em Data Ana
 	variable PointA, PointB
 	string BPMnamex, BPMnamey, dest, SWaveX, SWaveY
 	variable i, j, k, aux
-	string firstitem, firstWaveitem
+	string firstitem, firstWaveitem, PVsFile_
 	
 	cursorA = NumberByKey("POINT", CsrInfo(A)) //ponto do cursor A
 	cursorB = NumberByKey("POINT", CsrInfo(B)) //ponto do cursor B
@@ -164,10 +164,21 @@ Function getorbprofile() //acessado através do botão Orbit Profile em Data Ana
 		DeletePoints -inf, numpnts(bpmslabely), bpmslabely
 		DeletePoints -inf, numpnts(diffBPMsX), diffBPMsX
 		DeletePoints -inf, numpnts(diffBPMsY), diffBPMsY
-		Grep/O/E=(filterXc) PVsFile as bpmsxc
-		Grep/O/E=(filterYc) PVsFile as bpmsyc
-		Grep/O/E=(filterXm) PVsFile as bpmsxm
-		Grep/O/E=(filterYm) PVsFile as bpmsym
+			
+		PathInfo EPICS_Tools
+		if (V_Flag == 1)
+			PVsFile_ = S_path + PVsFile
+		else
+			print "Problems finding EPICSpvlist.dat"
+			return 0
+		endif
+		KillVariables/Z V_Flag
+		KillStrings/Z S_path
+		
+		Grep/O/E=(filterXc) PVsFile_ as bpmsxc
+		Grep/O/E=(filterYc) PVsFile_ as bpmsyc
+		Grep/O/E=(filterXm) PVsFile_ as bpmsxm
+		Grep/O/E=(filterYm) PVsFile_ as bpmsym
 		sort bpmsxc, bpmsxc //coloca em ordem alfanumerica
 		sort bpmsxm, bpmsxm
 		sort bpmsyc, bpmsyc

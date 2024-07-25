@@ -423,11 +423,21 @@ Function ButtonProc_AddSelection_Comp(ba) : ButtonControl
 	SVAR/Z PVsFile = root:GlobalVariables:gPVsfile
 	variable i
 	string aux = ""
+	string PVsFile_
 	
 	switch( ba.eventCode )
 		case 2: // mouse up
 			if (strlen(SearchField) != 0) //se há algo no campo SearchField
-				Grep/E=SearchField PVsFile as wGrepRes //pesquisa no arquivo pvfile pela PV usando como critério SearchField, retorna na wave wGrepRes
+				PathInfo EPICS_Tools
+				if (V_Flag == 1)
+					PVsFile_ = S_path + PVsFile
+				else
+					print "Problems finding EPICSpvlist.dat"
+					return 0
+				endif
+				KillVariables/Z V_Flag
+				KillStrings/Z S_path
+				Grep/E=SearchField PVsFile_ as wGrepRes //pesquisa no arquivo pvfile pela PV usando como critério SearchField, retorna na wave wGrepRes
 				if (wavedims(wGrepRes) == 0) //verifico se há algum resultado que corresponde à pesquisa, se não há...
 					print "There's no item that corresponds to that EPICS Name / Search Filters!" //emito aviso
 					SetVariable svSearchField activate // e retorno a seleção ao campo do Nome EPICS/Filtro de Pesquisa
@@ -436,7 +446,7 @@ Function ButtonProc_AddSelection_Comp(ba) : ButtonControl
 					wParameters2Search[inf] = SearchField //adiciono o valor digitado à wave de itens a serem carregados
 					SearchField = "" //esvazio o campo
 					SetVariable svSearchField activate //retorno o cursor de texto ao campo do Nome EPICS/Filtro de Pesquisa
-					make/T/O/N=0 wGrepRes //esvazio a wave
+					DeletePoints 0, inf, wGrepRes //esvazio a wave
 				endif
 				killstrings/Z V_flag, V_value, V_startParagraph, S_fileName, S_path, S_Value //mato as strings geradas no Grep acima
 				killvariables/Z V_flag, V_value, V_startParagraph, S_fileName, S_path, S_Value  //idem para variáveis
@@ -573,6 +583,7 @@ Function ButtonProc_LoadCompare(ba) : ButtonControl
 	wave temp_TS
 	string wavesinroot = ""
 	variable waveexist
+	string PVsFile_
 		
 	switch( ba.eventCode )
 		case 2: // mouse up
@@ -590,7 +601,16 @@ Function ButtonProc_LoadCompare(ba) : ButtonControl
 				for (i=0; i < numpnts(wParameters2Search); i+=1)//para cada parametro de pesquisa no caixa de pesquisa
 					//Redimension/N=(numpnts(wPVs)) wPVstemp //igualo dimensoes de wPVs(1) e wPVstemp(1)
 					//wPVstemp = wPVs //copio wPVs para wPVstemp
-					Grep/E=wParameters2Search[i] PVsFile as wGrepRes //pesquiso no arquivo PVsFile e gero o resultado na wave GrepRes
+					PathInfo EPICS_Tools
+					if (V_Flag == 1)
+						PVsFile_ = S_path + PVsFile
+					else
+						print "Problems finding EPICSpvlist.dat"
+						return 0
+					endif
+					KillVariables/Z V_Flag
+					KillStrings/Z S_path
+					Grep/E=wParameters2Search[i] PVsFile_ as wGrepRes //pesquiso no arquivo PVsFile e gero o resultado na wave GrepRes
 					//Redimension/N=(numpnts(wPVs)+numpnts(wGrepRes)) wPVs //redimensiono wPVs para acomodar o resultado
 					Concatenate/NP/T {wGrepRes}, wPVs //junto todas as iterações de wGrepRes na wave wPVs
 					Concatenate/NP/T {wGrepRes}, wPVsCompWin //junto todas as iterações de wGrepRes na wave wPVsCompWin
