@@ -222,7 +222,7 @@ Function CreateGraph(wfilter, leg)
 	wave/T wGrepResTotal
 	SVAR/Z PVsFile = root:GlobalVariables:gPVsfile
 	string PVsFile_
-	
+
 	PathInfo EPICS_Tools
 	if (V_Flag == 1)
 		PVsFile_ = S_path + PVsFile
@@ -232,20 +232,20 @@ Function CreateGraph(wfilter, leg)
 	endif
 	KillVariables/Z V_Flag
 	KillStrings/Z S_path
-	
+
 	for(i=0;ItemsInList(wfilter)>i;i+=1)
 		Grep/O/E=StringFromList(i,wfilter) PVsFile_ as wGrepRes //pesquiso filtros no arquivo de PVs
 		Concatenate/T/NP {wGrepRes}, wGrepResTotal
 	endfor
-	
+
 	killstrings/A/Z //mato as strings geradas no Grep acima
 	killvariables/A/Z //idem para variáveis
-	
+
 	if(numpnts(wGrepResTotal)>0)
 		displaywave = ReplaceString(":",wGrepResTotal[0],"_")
 		displaywave_TS = displaywave + "_TS"
 		Display $displaywave vs $displaywave_TS
-	
+
 		for(i=1;numpnts(wGrepResTotal)>i;i+=1)
 			AppendToGraph $(ReplaceString(":",wGrepResTotal[i],"_")) vs $(ReplaceString(":",wGrepResTotal[i] + "_TS","_"))
 		endfor
@@ -266,7 +266,7 @@ Function CreateBPMGraph(wfilter, leg)
 	wave/T wGrepResTotal
 	SVAR/Z PVsFile = root:GlobalVariables:gPVsfile
 	string PVsFile_
-	
+
 	PathInfo EPICS_Tools
 	if (V_Flag == 1)
 		PVsFile_ = S_path + PVsFile
@@ -276,20 +276,20 @@ Function CreateBPMGraph(wfilter, leg)
 	endif
 	KillVariables/Z V_Flag
 	KillStrings/Z S_path
-	
+
 	for(i=0;ItemsInList(wfilter)>i;i+=1)
 		Grep/O/E=StringFromList(i,wfilter) PVsFile_ as wGrepRes //pesquiso filtros no arquivo de PVs
 		Concatenate/T/NP {wGrepRes}, wGrepResTotal
 	endfor
-	
+
 	killstrings/A/Z //mato as strings geradas no Grep acima
 	killvariables/A/Z //idem para variáveis
-	
+
 	if(numpnts(wGrepResTotal)>0)
 		displaywave = ReplaceString(":",wGrepResTotal[0],"_")
 		displaywave_TS = displaywave + "_TS"
 		Display $displaywave vs $displaywave_TS
-	
+
 		for(i=1;numpnts(wGrepResTotal)>i;i+=1)
 			AppendToGraph $(ReplaceString(":",wGrepResTotal[i],"_")) vs $(ReplaceString(":",wGrepResTotal[i] + "_TS","_"))
 		endfor
@@ -317,9 +317,9 @@ Function GraphModifier(leftaxis, rightaxis, mode)
 	variable lowfracdivaxis
 	variable highfracdivaxis
 	variable lowfracdivaxisold
-	
+
 		//ModifyGraph axisEnab(left)={0,0.23}
-		
+
 		qdivaxis = (leftaxis-1) //quantidade de divisões do eixo
 		for(i=0;i<leftaxis-1;i+=1)
 			leftaxisname = "left" + num2str(i+1)
@@ -335,10 +335,10 @@ Function GraphModifier(leftaxis, rightaxis, mode)
 				highfracdivaxis = lowfracdivaxis + (round(100/leftaxis)/100 * (i+1) ) + (0.01 * (i+1))
 				Modifygraph axisEnab($leftaxisname) = {lowfracdivaxis, highfracdivaxis}
 			endif
-			
+
 		endfor
-	
-		//for(i=0;i 
+
+		//for(i=0;i
 End
 
 Function ClearWaves()
@@ -347,15 +347,15 @@ Function ClearWaves()
 	DFREF DFR = GetDataFolderDFR()
 	variable i
 	variable YesOrNo
-	
+
 	DoAlert/T="Continue?" 1, "Are you sure?\r\rIf you click 'Yes', the content of all waves will be erased!\r\rUse this if you want to make this Experiment's file smaller or to release memory."
-	
+
 	if (V_Flag == 1)
 		SetDataFolder root:
 		list = WaveList("*",";","")
 		for(i=0;ItemsInList(list)>i;i+=1)
 			wname = stringfromlist(i,list)
-			Redimension/N=0 $wname
+			Redimension/N=2 $wname
 		endfor
 		//print "YES"
 		print "Waves's Content Erased!"
@@ -371,11 +371,11 @@ Function KillAllGraphs()
     string fulllist = WinList("*", ";","WIN:1")
     string name, cmd
     variable i
-   
+
     for(i=0; i<itemsinlist(fulllist); i +=1)
         name = stringfromlist(i, fulllist)
         sprintf cmd, "Dowindow/K %s", name
-        execute cmd    
+        execute cmd
     endfor
 end
 
@@ -395,7 +395,7 @@ Function GetAllPVs_(url)
 	variable refnum, i, offset, totalpvs, multiplier
 	variable ten_perc
 	string filename
-	
+
 //	data = FetchURL("https://ais-eng-srv-ta.cnpem.br/mgmt/bpl/getAllPVs?limit=-1")
 	data = FetchURL(url)
 	print "data:", strlen(data)
