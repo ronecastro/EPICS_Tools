@@ -569,7 +569,7 @@ Function LoadCompare(pvname, centry)
 	//SetDHVars() //função preenche variaveis globais de data/hora inicio/fim
 	url = BuildArchiverURL_Comp(pvname, gStartDate, gEndDate)
 	
-	result = archiver2igor(url, pvname)
+	result = archiver2igor_(url, pvname)
 
 	if (strlen(gEmptyPV) == 0 && strlen(gParseFail) == 0 && gECode == 0)
 		result = 0

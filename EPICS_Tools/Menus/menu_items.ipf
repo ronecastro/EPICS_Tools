@@ -383,11 +383,11 @@ end
 Function RefreshEPICSpvlist()
 	SVAR/Z gGetAllPVsURL = root:GlobalVariables:gGetAllPVsURL
 	//GetAllPVs("http://10.0.38.42/retrieval/bpl/getMatchingPVs?pv=*&limit=-1")
-	GetAllPVs(gGetAllPVsURL)
+	GetAllPVs_(gGetAllPVsURL)
 End
 
 //Essa função gera uma lista com todas as PVs do Archiver
-Function GetAllPVs(url)
+Function GetAllPVs_(url)
 	string url
 	string data
 	wave/T wAllPVsList = root:VarList:wAllPVsList
