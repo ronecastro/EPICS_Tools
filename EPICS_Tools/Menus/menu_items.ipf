@@ -396,7 +396,8 @@ Function GetAllPVs_(url)
 	variable ten_perc
 	string filename
 	
-	data = FetchURL("https://ais-eng-srv-ta.cnpem.br/mgmt/bpl/getAllPVs?limit=-1")
+//	data = FetchURL("https://ais-eng-srv-ta.cnpem.br/mgmt/bpl/getAllPVs?limit=-1")
+	data = FetchURL(url)
 	print "data:", strlen(data)
 	print "url:", url
 	variable error = GetRTError(1)
