@@ -10,7 +10,7 @@
 
 Window LoadDataWindow() : Panel
 	PauseUpdate; Silent 1		// building window...
-	NewPanel /K=1 /W=(1402,208,1918,836) as "LOAD DATA"
+	NewPanel /K=1 /W=(1396,208,1912,836) as "LOAD DATA"
 	ModifyPanel fixedSize=1
 	SetDrawLayer UserBack
 	DrawRect 44,118,464,184
@@ -106,6 +106,8 @@ Window LoadDataWindow() : Panel
 	ValDisplay vdBar,limits={0,100,0},barmisc={0,0},mode= 3,highColor= (0,65535,0)
 	ValDisplay vdBar,value= _NUM:100
 	Button btnCancel,pos={379.00,512.00},size={90.00,29.00},disable=1,title="Cancel"
+	Button brnDel1,pos={207.00,557.00},size={125.00,20.00},title="Test Btn"
+	Button brnDel1,help={"Hint:\rYou can 'Shift+Click' the lines above to delete multiple ones."}
 	SetWindow kwTopWin,hook(spinner)=LoadDataWindowSpinHook
 EndMacro
 
