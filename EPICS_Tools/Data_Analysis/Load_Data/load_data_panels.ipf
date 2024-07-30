@@ -32,51 +32,51 @@ Window LoadDataWindow() : Panel
 	DrawText 48,356,"EPICS Name / Search Filter (RegEx syntax):"
 	DrawText 325,52,"TimeZone (h):"
 	DrawText 320,79,"TimeStamp(s):"
-	SetVariable svStartDay,pos={57.00,150.00},size={50.00,17.00},title=" "
+	SetVariable svStartDay,pos={57.00,150.00},size={50.00,18.00},title=" "
 	SetVariable svStartDay,help={"Day"},format="%02d"
 	SetVariable svStartDay,limits={1,31,1},value= root:GlobalVariables:dds
-	SetVariable svStartMonth,pos={114.00,150.00},size={50.00,17.00},title=" "
+	SetVariable svStartMonth,pos={114.00,150.00},size={50.00,18.00},title=" "
 	SetVariable svStartMonth,help={"Month"},format="%02d"
 	SetVariable svStartMonth,limits={1,12,1},value= root:GlobalVariables:mms
-	SetVariable svStartYear,pos={171.00,150.00},size={50.00,17.00},title=" "
+	SetVariable svStartYear,pos={171.00,150.00},size={50.00,18.00},title=" "
 	SetVariable svStartYear,help={"Year"},format="%04d"
 	SetVariable svStartYear,limits={2000,3000,1},value= root:GlobalVariables:yyyys
-	SetVariable svStartHour,pos={267.00,150.00},size={50.00,17.00},title=" "
+	SetVariable svStartHour,pos={267.00,150.00},size={50.00,18.00},title=" "
 	SetVariable svStartHour,help={"Hour"},format="%02d"
 	SetVariable svStartHour,limits={0,23,1},value= root:GlobalVariables:hs
-	SetVariable svStartMin,pos={328.00,150.00},size={50.00,17.00},title=" "
+	SetVariable svStartMin,pos={328.00,150.00},size={50.00,18.00},title=" "
 	SetVariable svStartMin,help={"Minute"},format="%02d"
 	SetVariable svStartMin,limits={0,59,1},value= root:GlobalVariables:ms
-	SetVariable svStartSec,pos={392.00,150.00},size={58.00,17.00},title=" "
+	SetVariable svStartSec,pos={392.00,150.00},size={58.00,18.00},title=" "
 	SetVariable svStartSec,help={"Second"},format="%.3f"
 	SetVariable svStartSec,limits={0,59,1},value= root:GlobalVariables:ss
-	SetVariable svEndDay,pos={57.00,246.00},size={50.00,17.00},disable=2,title=" "
+	SetVariable svEndDay,pos={57.00,246.00},size={50.00,18.00},disable=2,title=" "
 	SetVariable svEndDay,help={"Day"},format="%02d"
 	SetVariable svEndDay,limits={1,31,1},value= root:GlobalVariables:dde
-	SetVariable svEndMonth,pos={114.00,246.00},size={50.00,17.00},disable=2,title=" "
+	SetVariable svEndMonth,pos={114.00,246.00},size={50.00,18.00},disable=2,title=" "
 	SetVariable svEndMonth,help={"Month"},format="%02d"
 	SetVariable svEndMonth,limits={1,12,1},value= root:GlobalVariables:mme
-	SetVariable svEndYear,pos={171.00,246.00},size={50.00,17.00},disable=2,title=" "
+	SetVariable svEndYear,pos={171.00,246.00},size={50.00,18.00},disable=2,title=" "
 	SetVariable svEndYear,help={"Year"},format="%04d"
 	SetVariable svEndYear,limits={2000,3000,1},value= root:GlobalVariables:yyyye
-	SetVariable svEndHour,pos={267.00,246.00},size={50.00,17.00},disable=2,title=" "
+	SetVariable svEndHour,pos={267.00,246.00},size={50.00,18.00},disable=2,title=" "
 	SetVariable svEndHour,help={"Hour"},format="%02d"
 	SetVariable svEndHour,limits={0,23,1},value= root:GlobalVariables:he
-	SetVariable svEndMin,pos={328.00,246.00},size={50.00,17.00},disable=2,title=" "
+	SetVariable svEndMin,pos={328.00,246.00},size={50.00,18.00},disable=2,title=" "
 	SetVariable svEndMin,help={"Minute"},format="%02d"
 	SetVariable svEndMin,limits={0,59,1},value= root:GlobalVariables:me
-	SetVariable svEndSec,pos={392.00,246.00},size={58.00,17.00},disable=2,title=" "
+	SetVariable svEndSec,pos={392.00,246.00},size={58.00,18.00},disable=2,title=" "
 	SetVariable svEndSec,help={"Second"},format="%.3f"
 	SetVariable svEndSec,limits={0,59,1},value= root:GlobalVariables:se
-	SetVariable svSearchField,pos={48.00,358.00},size={315.00,17.00},title=" "
+	SetVariable svSearchField,pos={48.00,358.00},size={315.00,18.00},title=" "
 	SetVariable svSearchField,help={"Hints:\r(.) = one character;\r(.+) = one or more characters;\r(.*) = zero or more characters;\r(^) = 'start with' character;\r($) = 'end with' character;\rEx: ^SI-02.+CCG-...:Pressure-Mon$\rEx: ^SI-....:DI-BPM.*:PosX-Mon$"}
 	SetVariable svSearchField,value= root:GlobalVariables:gSearchField,live= 1
 	GroupBox group0,pos={27.00,8.00},size={460.00,289.00},title="\\BPERIOD",fSize=20
-	PopupMenu puPeriod,pos={45.00,35.00},size={141.00,17.00},bodyWidth=141,proc=PopMenuProc_Period
+	PopupMenu puPeriod,pos={45.00,35.00},size={141.00,19.00},bodyWidth=141,proc=PopMenuProc_Period
 	PopupMenu puPeriod,mode=6,popvalue="Fixed Start / End Now",value= #"\"Last Hour;Last 3 Hours;Last 6 Hours;Last 24 Hours;Fixed Start / Fixed End;Fixed Start / End Now\""
-	PopupMenu puInterval,pos={45.00,61.00},size={247.00,17.00},bodyWidth=247,disable=2,proc=PopMenuProc_Interval
+	PopupMenu puInterval,pos={45.00,61.00},size={247.00,19.00},bodyWidth=247,disable=2,proc=PopMenuProc_Interval
 	PopupMenu puInterval,mode=1,popvalue="Default Variable Interval",value= #"\"Default Variable Interval;Interval: 10 Points;Interval: 30 Points;Interval: 60 Points;Interval: 300 Points;Interval: Custom\""
-	PopupMenu puMethod,pos={212.00,34.00},size={80.00,17.00},bodyWidth=80,proc=PopMenuProc_Method
+	PopupMenu puMethod,pos={212.00,34.00},size={80.00,19.00},bodyWidth=80,proc=PopMenuProc_Method
 	PopupMenu puMethod,mode=1,popvalue="Normal",value= #"\"Normal;Average;Minimum;Maximum;N-th\""
 	SetVariable svNth,pos={245.00,89.00},size={47.00,18.00},disable=1,title=" "
 	SetVariable svNth,format="%d"
@@ -90,15 +90,15 @@ Window LoadDataWindow() : Panel
 	ListBox lbSelectionList,pos={48.00,394.00},size={315.00,146.00}
 	ListBox lbSelectionList,listWave=root:VarList:wParameters2Search
 	ListBox lbSelectionList,selWave=root:VarList:wParameterSel,mode= 4
-	SetVariable svAdjustDH,pos={405.00,62.00},size={60.00,17.00},title=" "
+	SetVariable svAdjustDH,pos={405.00,62.00},size={60.00,18.00},title=" "
 	SetVariable svAdjustDH,value= root:GlobalVariables:gAdjustDH
-	CheckBox cburl,pos={381.00,478.00},size={64.00,14.00},title="Print URL"
+	CheckBox cburl,pos={381.00,478.00},size={65.00,15.00},title="Print URL"
 	CheckBox cburl,variable= root:GlobalVariables:gPrintURL
-	SetVariable svAdjustTimezone,pos={405.00,35.00},size={60.00,17.00},title=" "
+	SetVariable svAdjustTimezone,pos={405.00,35.00},size={60.00,18.00},title=" "
 	SetVariable svAdjustTimezone,help={"Archiver solicitations must have\rfuse adjust for current timezone"}
 	SetVariable svAdjustTimezone,format="%d"
 	SetVariable svAdjustTimezone,limits={-11,14,1},value= root:GlobalVariables:gTimezone
-	CheckBox cbBPMs,pos={381.00,454.00},size={89.00,14.00},title="BPMs to Zero"
+	CheckBox cbBPMs,pos={381.00,454.00},size={87.00,15.00},title="BPMs to Zero"
 	CheckBox cbBPMs,variable= root:GlobalVariables:gZRbpms
 	Button btnMore,pos={440.00,358.00},size={28.00,19.00},proc=ButtonProc_OpenPDG,title="..."
 	Button btnMore,help={"Hint:\rClick to select predefined groups to add to Selection Parameters."}
@@ -106,8 +106,6 @@ Window LoadDataWindow() : Panel
 	ValDisplay vdBar,limits={0,100,0},barmisc={0,0},mode= 3,highColor= (0,65535,0)
 	ValDisplay vdBar,value= _NUM:100
 	Button btnCancel,pos={379.00,512.00},size={90.00,29.00},disable=1,title="Cancel"
-	Button brnDel1,pos={207.00,557.00},size={125.00,20.00},title="Test Btn"
-	Button brnDel1,help={"Hint:\rYou can 'Shift+Click' the lines above to delete multiple ones."}
 	SetWindow kwTopWin,hook(spinner)=LoadDataWindowSpinHook
 EndMacro
 
