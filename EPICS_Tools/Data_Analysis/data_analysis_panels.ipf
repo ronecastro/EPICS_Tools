@@ -5,6 +5,9 @@ Window DataAnalysis() : Panel
 	PauseUpdate; Silent 1		// building window...
 	NewPanel /K=1 /W=(1402,46,1916,184) as "Data Analysis"
 	ModifyPanel fixedSize=1
+	SetDrawLayer UserBack
+	SetDrawEnv fsize= 10
+	DrawText 7,132,"version: 0.0.1"
 	Button btn0,pos={12.00,14.00},size={90.00,40.00},proc=ButtonProc_LOADDATA,title="LOAD DATA"
 	Button btn1,pos={131.00,69.00},size={90.00,40.00},proc=ButtonProc_WaveVsWave,title="Wave vs Wave\rGraph"
 	Button btn2,pos={110.00,14.00},size={100.00,40.00},proc=ButtonProc_COMPAREDATA,title="COMPARE DATA"
