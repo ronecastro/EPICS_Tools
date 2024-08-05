@@ -22,7 +22,7 @@ Function/T readcfg(section, key)
 
 	path = ParseFilePath(1, path, ":", 1, 0)
 	fileName = path + "config.cfg"
-    
+
 	Open/R refNum as fileName
 	do
 		FReadLine refNum, buffer
@@ -47,7 +47,7 @@ Function/T readcfg(section, key)
 		endif
 	while(True)
 	return file
-    
+
 End
 
 function save_graph_struct()
@@ -88,13 +88,13 @@ function save_graph_struct()
 		Sleep 00:00:02
 	endif
 	End
-	
-	
-static StrConstant kFileNameExtension = ".ibw"	
+
+
+static StrConstant kFileNameExtension = ".ibw"
 Function LoadOneFile(pathName, fileName)
     String pathName     // Name of an Igor symbolic path or "".
     String fileName         // Name of file or full path to file.
- 
+
     // First get a valid reference to a file.
     if ((strlen(pathName)==0) || (strlen(fileName)==0))
         // Display dialog looking for file.
@@ -111,7 +111,7 @@ Function LoadOneFile(pathName, fileName)
         Print "Error loading file - wrong number of waves loaded"
         return -1
     endif
- 
+
 	 KillVariables/Z V_flag
 	 KillStrings/Z S_fileName
     return 0                            // Success
@@ -138,10 +138,10 @@ Function LoadAllFiles()
             sprintf message, "An error occurred while loading the file \"%s\". Aborting the load.\r", fileName
             Print message
             DoAlert 0, message
-            break      
+            break
         endif
-  
-       
+
+
         Printf "Loaded file %d: \"%s\"\r", index, fileName
 
         index += 1
@@ -154,11 +154,11 @@ function open_graph_windows(window_list)
 	string window_list
 	string cmd
 	variable i, x
-	
+
 	x = ItemsInList(window_list)
 	for(i=0;i<x;i+=1)
 		cmd = StringFromList(i, window_list) + "()"
 		Execute cmd
 	endfor
-	
+
 End
