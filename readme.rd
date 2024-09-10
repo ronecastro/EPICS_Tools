@@ -12,6 +12,7 @@ It is meant to be used within Sirius Synchrotron Accelerator Facility.
 
 - Wavemetrics Igor works only with Windows and Mac Operational Systems. In order to run it under Linux, we use WineHQ.
 - Go to the correct version page of WineHQ relative to your Linux distribution and install it.
+ - https://tecadmin.net/install-wine-debian-9-stretch/ for wine 5.0.2 on debian 9
 - On Terminal, use 'winecfg' to check if Wine is working. Install all recommended sofware.
 - Download Wavemetrics Igor and install it using 'wine <path to Igor installation file>'.
 - Start Igor from the installation window as soon it asks to.
