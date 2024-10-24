@@ -63,6 +63,7 @@ Function ParseTxtData(data, wave_name)
 		endif
 	while (index != -1)
 		SetScale d -inf, inf, "dat", $wave_timestamp
+	return 0
 End
 
 //Essa função faz requisita dados de uma PV atraves de uma URL
@@ -71,10 +72,12 @@ Function archiver2igor_(url, pvname)
 	string pvname
 	string data
 	string wave_name
+	variable r
 	
 	data = FetchURL(url)
 	wave_name = ReplaceString(":", pvname, "_")
-	ParseTxtData(data, wave_name)
+	r = ParseTxtData(data, wave_name)
+	return r
 End
 
 //Esta função preenche as variáveis globais relativas aos controles da tela "LOAD DATA" baseadas
@@ -566,14 +569,16 @@ End
 //função que aplica o shift de todos os BPMs
 Function ShiftAllBPMs()
 	string fulllist = WaveList("*BPM*Mon*", ";", "")
-	string name, cmd
+	string name, cmd, wname
 	variable i
    
    if (ItemsInList(fulllist) > 0)
 		for(i=0; i<itemsinlist(fulllist); i+=1)
 			name = stringfromlist(i, fulllist)
-			sprintf cmd, "BpmShiftWave(0, '%s')", name
-			execute cmd    
+			wname = name
+			BpmShiftWave(0, wname)
+//			sprintf cmd, "BpmShiftWave(0, '%s')", name
+//			execute cmd    
 		endfor
 	print "BPMs Shifting Operation Complete!"
 	print " "

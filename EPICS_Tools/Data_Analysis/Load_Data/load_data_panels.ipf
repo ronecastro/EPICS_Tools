@@ -788,6 +788,7 @@ Function ButtonProc_LoadSelection(ba) : ButtonControl
 	string changedname
 	variable bar
 	string PVsFile_
+	variable loadstatus
 	
 	switch( ba.eventCode )
 		case 2: // mouse up
@@ -837,7 +838,8 @@ Function ButtonProc_LoadSelection(ba) : ButtonControl
 						break
 					endif
 					currentwave = wPVs[i]
-					if (LoadSelection(currentwave) == 0) //se função de carregar retornar ok
+					loadstatus = LoadSelection(currentwave)
+					if (loadstatus == 0) //se função de carregar retornar ok
 						//Verifica waves congeladas:
 						if (isPVFrozen(currentwave) && stringmatch(currentwave,"!*-SP"))
 							InsertPoints (inf), 1, FrozenWaves
@@ -854,6 +856,7 @@ Function ButtonProc_LoadSelection(ba) : ButtonControl
 						if(GetControlValueNbr("cbBPMs", "LoadDataWindow") == 1)
 							if(stringmatch(wPVs[i],"*BPM*Mon"))
 								changedname = ReplaceString(":", wPVs[i], "_")
+								print(changedname)
 								BpmShiftWave(0, changedname)
 							endif
 						endif
