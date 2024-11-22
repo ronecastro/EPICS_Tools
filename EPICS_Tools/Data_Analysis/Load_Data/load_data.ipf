@@ -579,3 +579,89 @@ Function ShiftAllBPMs()
 	print " "
 	endif
 end
+
+//Função para shiftar valores da wave de FONTES para a referência. 
+//Recebe um valor de referência (valor do primeiro ponto de uma wave
+//ou zero, por exemplo) e um wave como argumentos.
+Function PsShiftWave(ref, wname_PS)
+	variable ref
+	string wname_PS
+	variable diff
+	variable NEWpntval
+	variable i
+	string name_PS
+	string cmd
+	wave/Z mywave = $wname_PS
+	
+	if (numpnts(mywave) > 0)
+	diff = ref - mywave[0]
+		for(i=0;numpnts(mywave)>i;i+=1)
+			NEWpntval = mywave[i] + diff
+			mywave[i] = NEWpntval
+		endfor
+	else
+		name_PS = NameOfWave(mywave)
+		sprintf cmd, "Wave %s vazia!", wname_PS
+		print cmd
+	endif
+End
+
+//função que aplica o shift em fontes
+Function ShiftAllPS()
+	string fulllist = WaveList("*Current*|*Voltage*|*PWM*", ";", "")
+	string name_PS, cmd
+	variable i
+   
+   if (ItemsInList(fulllist) > 0)
+		for(i=0; i<itemsinlist(fulllist); i+=1)
+			name_PS = stringfromlist(i, fulllist)
+			sprintf cmd, "PsShiftWave(0, '%s')", name_PS
+			execute cmd    
+		endfor
+	print "PS Shifting Operation Complete!"
+	print " "
+	endif
+end
+
+//Função para shiftar valores da wave de TEMPERATURA para a referência. 
+//Recebe um valor de referência (valor do primeiro ponto de uma wave
+//ou zero, por exemplo) e um wave como argumentos.
+Function TempShiftWave(ref, wname)
+	variable ref
+	string wname
+	variable diff
+	variable NEWpntval
+	variable i
+	string name
+	string cmd
+	wave/Z mywave = $wname
+	
+	if (numpnts(mywave) > 0)
+	diff = ref - mywave[0]
+		for(i=0;numpnts(mywave)>i;i+=1)
+			NEWpntval = mywave[i] + diff
+			mywave[i] = NEWpntval
+		endfor
+	else
+		name = NameOfWave(mywave)
+		sprintf cmd, "Wave %s vazia!", wname
+		print cmd
+	endif
+End
+
+//função que aplica o shift em temperaturas.
+Function ShiftAllTEMP()
+	string fulllist = WaveList("*emp*|*T-Mon*", ";", "")
+	string name, cmd
+	variable i
+   
+   if (ItemsInList(fulllist) > 0)
+		for(i=0; i<itemsinlist(fulllist); i+=1)
+			name = stringfromlist(i, fulllist)
+			sprintf cmd, "TempShiftWave(0, '%s')", name
+			execute cmd    
+		endfor
+	print "Temperatures Shifting Operation Complete!"
+	print " "
+	endif
+end

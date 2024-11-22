@@ -34,6 +34,10 @@ Window CompareDataWindow() : Panel
 	CheckBox cburl,variable= root:Compare:Variables:gPrintURL
 	CheckBox cbBPMs,pos={171.00,448.00},size={89.00,14.00},title="BPMs to Zero"
 	CheckBox cbBPMs,variable= root:Compare:Variables:gZRbpms
+	CheckBox cbPS,pos={171.00,512.00},size={89.00,14.00},title="BPMs to Zero"
+	CheckBox cbPS,variable= root:Compare:Variables:gZRps
+	CheckBox cbTemp,pos={171.00,550.00},size={89.00,14.00},title="BPMs to Zero"
+	CheckBox cbTemp,variable= root:Compare:Variables:gZRtemp
 	Button btnMore,pos={433.00,56.00},size={28.00,19.00},proc=ButtonProc_OpenPDG_Comp,title="..."
 	Button btnMore,help={"Hint:\rClick to select predefined groups to add to Selection Parameters."}
 	ValDisplay vdBar,pos={15.00,500.00},size={414.00,17.00},disable=1,title="1/1"
@@ -568,6 +572,8 @@ Function ButtonProc_LoadCompare(ba) : ButtonControl
 	wave/T wPeriodsWin = root:Compare:VarWaves:wPeriodsWin
 	wave wPeriodsWinSel = root:Compare:VarWaves:wPeriodsWinSel
 	SVAR/Z gZRbpms = root:Compare:Variables:gZRbpms
+	SVAR/Z gZRps = root:Compare:Variables:gZRps
+	SVAR/Z gZRtemp = root:Compare:Variables:gZRtemp	
 	NVAR/Z gAbort = root:Compare:Variables:gAbort
 	NVAR/Z gMethod = root:Compare:Variables:gMethod
 	wave/T wPeriods2Compare = root:Compare:VarWaves:wPeriods2Compare
